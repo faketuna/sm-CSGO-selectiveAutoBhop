@@ -33,6 +33,7 @@ public void OnPluginStart() {
 
     for(int i = 1; i <= MaxClients; i++) {
         if(IsClientInGame(i) && !IsFakeClient(i)) {
+            g_bPlayerBhop[i] = false;
             SendConVarValue(i, g_cAutoBunnyHopping, "0");
         }
     }
