@@ -1,0 +1,28 @@
+"Phrases"
+{
+    "sab prefix"
+    {
+        "en"        "{purple}[Bhop] {default}"
+        "jp"        "{purple}[Bhop] {default}"
+    }
+    "sab enabled"
+    {
+        "en"        "Auto bhop now {green}Enabled"
+        "jp"        "Auto bhopが{green}有効化{default}されました"
+    }
+    "sab disabled"
+    {
+        "en"        "Auto bhop now {darkred}Disabled"
+        "jp"        "Auto bhopが{darkred}無効化{default}されました"
+    }
+    "sab notice"
+    {
+        "en"        "Use {blue}!bhop{default} to toggle auto bhop!"
+        "jp"        "{blue}!bhop{default}を使用してauto bhopを切り替えられます！"
+    }
+    "sab cmd disabled"
+    {
+        "en"        "This command is currently disabled."
+        "jp"        "このコマンドは現在無効化されています"
+    }
+}
