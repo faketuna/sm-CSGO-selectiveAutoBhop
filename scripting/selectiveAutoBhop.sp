@@ -97,24 +97,13 @@ public void OnServerBhopToggled(ConVar convar, const char[] oldValue, const char
     if(StrEqual(oldValue, newValue)) {
         return;
     }
-    
-    if(StrEqual(newValue, "0")) {
-        CreateTimer(0.01, delayedConVarSync, 1, TIMER_FLAG_NO_MAPCHANGE);
-    } else {
-        for(int i = 1; i <= MaxClients; i++) {
-            if(IsClientInGame(i) && !IsFakeClient(i)) {
-                SendConVarValue(i, g_cAutoBunnyHopping, "0");
-            }
-        }
-    }
+    CreateTimer(0.01, delayedConVarSync, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
-public Action delayedConVarSync(Handle timer, int value) {
-    char val[2];
-    Format(val, sizeof(val), "%d", value);
+public Action delayedConVarSync(Handle timer) {
     for(int i = 1; i <= MaxClients; i++) {
-        if(IsClientInGame(i) && !IsFakeClient(i) && g_bPlayerBhop[i]) {
-            SendConVarValue(i, g_cAutoBunnyHopping, val);
+        if(IsClientInGame(i) && !IsFakeClient(i)) {
+            SendConVarValue(i, g_cAutoBunnyHopping, g_bPlayerBhop[i] ? "1" : "0");
         }
     }
     return Plugin_Stop;
