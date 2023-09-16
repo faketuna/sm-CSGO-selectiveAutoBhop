@@ -62,7 +62,7 @@ public Action OnRoundStart(Handle event, const char[] name, bool dontBroadcast) 
         CPrintToChatAll("%t%t", "sab prefix", "sab notice");
     }
     for(int i = 1; i <= MaxClients; i++) {
-        if(IsClientInGame(i)) {
+        if(IsClientInGame(i) && !IsFakeClient(i)) {
             SendConVarValue(i, g_cAutoBunnyHopping, g_bPlayerBhop[i] ? "1" : "0");
         }
     }
