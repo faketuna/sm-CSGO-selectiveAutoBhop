@@ -125,6 +125,10 @@ public Action OnPlayerRunCmd(int client, int &buttons)
         return Plugin_Continue;
     }
     if (buttons & IN_JUMP) {
+        int entflags = GetEntityFlags(client);
+        if (entflags & FL_INWATER || entflags & FL_SWIM) {
+            return Plugin_Continue;
+        }
         if (GetEntPropEnt(client, Prop_Send, "m_hGroundEntity") == -1) {
             if (validMoveType(GetEntityMoveType(client))) {
                 buttons &= ~IN_JUMP;
