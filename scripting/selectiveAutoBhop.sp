@@ -10,6 +10,7 @@
 
 ConVar g_cPluginEnabled;
 ConVar g_cAutoBunnyHopping;
+char g_sAutoBunnyHopping[2] = "0";
 
 bool g_bPluginEnabled;
 bool g_bPlayerBhop[MAXPLAYERS+1];
@@ -63,6 +64,10 @@ public Action OnRoundStart(Handle event, const char[] name, bool dontBroadcast) 
     }
     for(int i = 1; i <= MaxClients; i++) {
         if(IsClientInGame(i) && !IsFakeClient(i)) {
+            if(!g_bPluginEnabled) {
+                SendConVarValue(i, g_cAutoBunnyHopping, g_sAutoBunnyHopping);
+                continue;
+            }
             SendConVarValue(i, g_cAutoBunnyHopping, g_bPlayerBhop[i] ? "1" : "0");
         }
     }
@@ -97,12 +102,17 @@ public void OnServerBhopToggled(ConVar convar, const char[] oldValue, const char
     if(StrEqual(oldValue, newValue)) {
         return;
     }
+    strcopy(g_sAutoBunnyHopping, sizeof(g_sAutoBunnyHopping), newValue);
     CreateTimer(0.01, delayedConVarSync, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public Action delayedConVarSync(Handle timer) {
     for(int i = 1; i <= MaxClients; i++) {
         if(IsClientInGame(i) && !IsFakeClient(i)) {
+            if(!g_bPluginEnabled) {
+                SendConVarValue(i, g_cAutoBunnyHopping, g_sAutoBunnyHopping);
+                continue;
+            }
             SendConVarValue(i, g_cAutoBunnyHopping, g_bPlayerBhop[i] ? "1" : "0");
         }
     }
